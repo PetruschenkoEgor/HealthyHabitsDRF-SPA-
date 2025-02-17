@@ -6,5 +6,4 @@ from healthy_habits.apps import HealthyHabitsConfig
 app_name = HealthyHabitsConfig.name
 
 urlpatterns = [
-    path('',)
 ]
