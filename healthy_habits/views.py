@@ -29,7 +29,7 @@ class HabitListAPIView(ListAPIView):
 
 
 class HabitPublicAPIView(ListAPIView):
-    """ Список публичных привычек """
+    """ Список публичных привычек. """
 
     queryset = Habit.objects.all()
     serializer_class = HabitPublicSerializer
