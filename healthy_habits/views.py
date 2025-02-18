@@ -1,6 +1,7 @@
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 
 from healthy_habits.models import Habit
+from healthy_habits.pagination import HabitPagination
 from healthy_habits.serializers import HabitSerializer, HabitPublicSerializer
 
 
@@ -21,6 +22,7 @@ class HabitListAPIView(ListAPIView):
     """ Список привычек текущего пользователя. """
 
     serializer_class = HabitSerializer
+    pagination_class = HabitPagination
 
     def get_queryset(self):
         """ Возвращает список привычек текущего пользователя. """
