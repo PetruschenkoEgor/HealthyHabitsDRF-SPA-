@@ -10,15 +10,12 @@ class HabitSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class HabitPublicSerializer(serializers.ModelSerializer):
+class HabitPublicSerializer(serializers.Serializer):
 
     habits_public = serializers.SerializerMethodField()
 
-    def get_habits_public(self):
+    def get_habits_public(self, obj):
         """ Публичные привычки. """
 
-        return Habit.objects.filter(sign_publicity=True).values()
-
-    class Meta:
-        model = Habit
-        fields = '__all__'
+        habit_publicity = Habit.objects.filter(sign_publicity=True)
+        return HabitSerializer(habit_publicity, many=True).data
