@@ -4,7 +4,7 @@ from users.serializers import UserSerializer
 
 
 class UserCreateAPIView(CreateAPIView):
-    """ Регистрация пользователя. """
+    """Регистрация пользователя."""
 
     serializer_class = UserSerializer
 

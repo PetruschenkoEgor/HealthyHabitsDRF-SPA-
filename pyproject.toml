@@ -22,8 +22,29 @@ pytz = "^2025.1"
 django-cors-headers = "^4.7.0"
 drf-yasg = "^1.21.8"
 coverage = "^7.6.12"
+black = "^25.1.0"
+isort = "^6.0.0"
+flake8 = "^7.1.2"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+exclude = '''
+(
+  /(
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | dist
+  )/
+)
+'''
+
+[tool.isort]
+line_length = 119

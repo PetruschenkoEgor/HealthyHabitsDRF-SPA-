@@ -9,14 +9,21 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('healthy_habits', '0001_initial'),
-        ('users', '0001_initial'),
+        ("healthy_habits", "0001_initial"),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='habit',
-            name='user',
-            field=models.ForeignKey(blank=True, help_text='Укажите создателя привычки', null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.user', verbose_name='Создатель привычки'),
+            model_name="habit",
+            name="user",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Укажите создателя привычки",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="users.user",
+                verbose_name="Создатель привычки",
+            ),
         ),
     ]
