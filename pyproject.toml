@@ -20,6 +20,7 @@ eventlet = "^0.39.0"
 django-celery-beat = "^2.7.0"
 pytz = "^2025.1"
 django-cors-headers = "^4.7.0"
+drf-yasg = "^1.21.8"
 
 
 [build-system]

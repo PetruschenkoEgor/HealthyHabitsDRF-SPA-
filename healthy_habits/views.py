@@ -59,6 +59,9 @@ class HabitRetrieveAPIView(RetrieveAPIView):
     def get_queryset(self):
         """ Возвращает список привычек текущего пользователя. """
 
+        if getattr(self, 'swagger_fake_view', False):
+            # Возвращаем пустой queryset или другой подходящий ответ во время генерации схемы
+            return Habit.objects.none()
         return Habit.objects.filter(user=self.request.user)
 
 
@@ -71,6 +74,9 @@ class HabitUpdateAPIView(UpdateAPIView):
     def get_queryset(self):
         """ Возвращает список привычек текущего пользователя. """
 
+        if getattr(self, 'swagger_fake_view', False):
+            # Возвращаем пустой queryset или другой подходящий ответ во время генерации схемы
+            return Habit.objects.none()
         return Habit.objects.filter(user=self.request.user)
 
 
@@ -83,4 +89,7 @@ class HabitDestroyAPIView(DestroyAPIView):
     def get_queryset(self):
         """ Возвращает список привычек текущего пользователя. """
 
+        if getattr(self, 'swagger_fake_view', False):
+            # Возвращаем пустой queryset или другой подходящий ответ во время генерации схемы
+            return Habit.objects.none()
         return Habit.objects.filter(user=self.request.user)
