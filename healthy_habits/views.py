@@ -29,10 +29,10 @@ class HabitListAPIView(ListAPIView):
     pagination_class = HabitPagination
     permission_classes = [IsAuthenticated,]
 
-    def get_queryset(self):
-        """ Возвращает список привычек текущего пользователя. """
-
-        return Habit.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     """ Возвращает список привычек текущего пользователя. """
+    #
+    #     return Habit.objects.filter(user=self.request.user)
 
 
 class HabitPublicAPIView(ListAPIView):
@@ -54,42 +54,44 @@ class HabitRetrieveAPIView(RetrieveAPIView):
 
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated, IsOwnerUser,]
+    # permission_classes = [IsAuthenticated, IsOwnerUser,]
 
-    def get_queryset(self):
-        """ Возвращает список привычек текущего пользователя. """
-
-        if getattr(self, 'swagger_fake_view', False):
-            # Возвращаем пустой queryset или другой подходящий ответ во время генерации схемы
-            return Habit.objects.none()
-        return Habit.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     """ Возвращает список привычек текущего пользователя. """
+    #
+    #     if getattr(self, 'swagger_fake_view', False):
+    #         # Возвращаем пустой queryset во время генерации схемы
+    #         return Habit.objects.none()
+    #     return Habit.objects.filter(user=self.request.user)
 
 
 class HabitUpdateAPIView(UpdateAPIView):
     """ Редактирование привычки. """
 
+    queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated, IsOwnerUser,]
+    # permission_classes = [IsAuthenticated, IsOwnerUser,]
 
-    def get_queryset(self):
-        """ Возвращает список привычек текущего пользователя. """
-
-        if getattr(self, 'swagger_fake_view', False):
-            # Возвращаем пустой queryset или другой подходящий ответ во время генерации схемы
-            return Habit.objects.none()
-        return Habit.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     """ Возвращает список привычек текущего пользователя. """
+    #
+    #     if getattr(self, 'swagger_fake_view', False):
+    #         # Возвращаем пустой queryset во время генерации схемы
+    #         return Habit.objects.none()
+    #     return Habit.objects.filter(user=self.request.user)
 
 
 class HabitDestroyAPIView(DestroyAPIView):
     """ Удаление привычки. """
 
+    queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated, IsOwnerUser,]
+    # permission_classes = [IsAuthenticated, IsOwnerUser,]
 
-    def get_queryset(self):
-        """ Возвращает список привычек текущего пользователя. """
-
-        if getattr(self, 'swagger_fake_view', False):
-            # Возвращаем пустой queryset или другой подходящий ответ во время генерации схемы
-            return Habit.objects.none()
-        return Habit.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     """ Возвращает список привычек текущего пользователя. """
+    #
+    #     if getattr(self, 'swagger_fake_view', False):
+    #         # Возвращаем пустой queryset во время генерации схемы
+    #         return Habit.objects.none()
+    #     return Habit.objects.filter(user=self.request.user)
