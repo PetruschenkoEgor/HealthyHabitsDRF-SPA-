@@ -154,10 +154,12 @@ CELERY_BEAT_SCHEDULE = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",  # адрес вашего фронтенд-сервера
+    "http://localhost:8001"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",  # адрес вашего фронтенд-сервера
+    "http://localhost:8001"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False

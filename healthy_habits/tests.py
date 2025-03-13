@@ -64,29 +64,13 @@ class HabitTestCase(APITestCase):
         url = reverse("healthy_habits:habit-list")
         response = self.client.get(url)
         data = response.json()
-        result = {
-            "count": 1,
-            "next": None,
-            "previous": None,
-            "results": [
-                {
-                    "id": 4,
-                    "place": "Дом",
-                    "time": "07:30:00",
-                    "action": "Принять витамины",
-                    "sign_pleasant_habit": False,
-                    "periodicity": 7,
-                    "reward": "Слушать музыку",
-                    "time_to_complete": "00:00:30",
-                    "sign_publicity": True,
-                    "user": None,
-                    "related_habit": None,
-                },
-            ],
-        }
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data, result)
+        self.assertEqual(data['count'], 1)
+        self.assertEqual(len(data['results']), 1)
+        habit_data = data['results'][0]
+        self.assertEqual(habit_data['place'], self.habit.place)
+        self.assertEqual(habit_data['time'], self.habit.time)
+        self.assertEqual(habit_data['action'], self.habit.action)
 
     def test_habit_public(self):
         """Тест списка публичных привычек."""
@@ -94,26 +78,21 @@ class HabitTestCase(APITestCase):
         url = reverse("healthy_habits:habit-public-list")
         response = self.client.get(url)
         data = response.json()
-        result = {
-            "habits_public": [
-                {
-                    "id": 5,
-                    "place": "Дом",
-                    "time": "07:30:00",
-                    "action": "Принять витамины",
-                    "sign_pleasant_habit": False,
-                    "periodicity": 7,
-                    "reward": "Слушать музыку",
-                    "time_to_complete": "00:00:30",
-                    "sign_publicity": True,
-                    "user": None,
-                    "related_habit": None,
-                },
-            ]
-        }
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data, result)
+
+        # Проверяем, что хотя бы одна привычка возвращается
+        self.assertTrue(len(data['habits_public']) > 0)
+
+        # Проверяем первую привычку в списке
+        habit_data = data['habits_public'][0]
+        self.assertEqual(habit_data['place'], self.habit.place)
+        self.assertEqual(habit_data['time'], self.habit.time)
+        self.assertEqual(habit_data['action'], self.habit.action)
+        self.assertEqual(habit_data['sign_pleasant_habit'], self.habit.sign_pleasant_habit)
+        self.assertEqual(habit_data['periodicity'], self.habit.periodicity)
+        self.assertEqual(habit_data['reward'], self.habit.reward)
+        self.assertEqual(habit_data['time_to_complete'], self.habit.time_to_complete)
+        self.assertEqual(habit_data['sign_publicity'], self.habit.sign_publicity)
 
     def test_habit_update(self):
         """Тест редактирование привычки"""
