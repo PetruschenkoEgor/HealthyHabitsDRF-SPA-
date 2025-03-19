@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -11,13 +13,14 @@ class HabitTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email="test@mail.ru")
         self.habit = Habit.objects.create(
+            user=self.user,
             place="Дом",
             time="07:30:00",
             action="Принять витамины",
             sign_pleasant_habit=False,
             periodicity=7,
             reward="Слушать музыку",
-            time_to_complete="00:00:30",
+            time_to_complete=timedelta(seconds=120),
             sign_publicity=True,
         )
         self.client.force_authenticate(user=self.user)
@@ -28,7 +31,7 @@ class HabitTestCase(APITestCase):
         url = reverse("healthy_habits:habit-create")
         data = {
             "place": "Дом",
-            "time": "8:00",
+            "time": "8:00:00",
             "action": "Принять прохладный душ",
             "sign_pleasant_habit": False,
             "periodicity": 7,
@@ -55,7 +58,10 @@ class HabitTestCase(APITestCase):
         self.assertEqual(data.get("sign_pleasant_habit"), self.habit.sign_pleasant_habit)
         self.assertEqual(data.get("periodicity"), self.habit.periodicity)
         self.assertEqual(data.get("reward"), self.habit.reward)
-        self.assertEqual(data.get("time_to_complete"), self.habit.time_to_complete)
+        expected_duration = str(self.habit.time_to_complete).split(':')
+        expected_duration = (f"{int(expected_duration[0]):02}:{int(expected_duration[1]):02}:"
+                             f"{int(expected_duration[2]):02}")
+        self.assertEqual(data.get("time_to_complete"), expected_duration)
         self.assertEqual(data.get("sign_publicity"), self.habit.sign_publicity)
 
     def test_habit_list(self):
@@ -91,7 +97,10 @@ class HabitTestCase(APITestCase):
         self.assertEqual(habit_data['sign_pleasant_habit'], self.habit.sign_pleasant_habit)
         self.assertEqual(habit_data['periodicity'], self.habit.periodicity)
         self.assertEqual(habit_data['reward'], self.habit.reward)
-        self.assertEqual(habit_data['time_to_complete'], self.habit.time_to_complete)
+        expected_duration = str(self.habit.time_to_complete).split(':')
+        expected_duration = (f"{int(expected_duration[0]):02}:{int(expected_duration[1]):02}:"
+                             f"{int(expected_duration[2]):02}")
+        self.assertEqual(habit_data['time_to_complete'], expected_duration)
         self.assertEqual(habit_data['sign_publicity'], self.habit.sign_publicity)
 
     def test_habit_update(self):
