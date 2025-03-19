@@ -6,7 +6,7 @@
 ## Установка
 1. Клонируйте репозиторий:
 ```
-git clone https://github.com/PetruschenkoEgor/HH_API_DB_Postgres
+git clone https://github.com/PetruschenkoEgor/HealthyHabitsDRF-SPA-
 ```
 2. Установите зависимости:
 ```
@@ -23,6 +23,22 @@ poetry install
 ## Запуск проекта в docker-compose
 - Для запуска проекта в docker-compose необходимо в терминале ввести команду docker-compose up -d --build 
 - Для проверки работоспособности сервисов необходимо в терминале ввести команду docker-compose run test 
+
+## Инструкция по настройке удаленного сервера и деплоя
+1. Клонируйте репозиторий:
+```
+git clone https://github.com/PetruschenkoEgor/HealthyHabitsDRF-SPA-
+```
+2. Создайте виртуальное окружение и установите зависимости:
+python -m venv venv
+source venv/bin/activate  # На Windows используйте `venv\Scripts\activate`
+pip install -r requirements.txt
+3. Настройте переменные окружения:
+Создайте файл .env в корне проекта и добавьте необходимые переменные окружения, они указаны в .env.example
+4. Подключитесь к серверу:
+ssh user@your_server_ip
+5. Далее необходимо в Git Hab секретах указать DOCKER_HUB_ACCESS_TOKEN, DOCKER_HUB_USERNAME, SECRET_KEY, SERVER_IP, SSH_KEY, SSH_USER
+6. После этого необходимо внести изменения в код проекта, сделать коммит и запушить в удаленный репозиторий на Git Hub, изменения автоматически пройдут тесты, соберутся образы и произойдет деплой
 
 ## Документация:
 Дополнительную информацию о структуре проекта можно найти в [документации](README.md).
