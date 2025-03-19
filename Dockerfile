@@ -1,5 +1,5 @@
 # Указываем базовый образ
-FROM python:3.12.4
+FROM python:3.12-slim
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
@@ -18,9 +18,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 RUN mkdir -p /app/media
+RUN mkdir -p /app/staticfiles && chmod -R 755 /app/staticfiles
 
 # Открываем порт 8000 для взаимодействия с приложением
 EXPOSE 8000
 
 # Определяем команду для запуска приложения
-CMD ['python', 'manage.py', 'runserver', '0.0.0.0:8001']
+CMD ['sh', '-c', 'python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000']
