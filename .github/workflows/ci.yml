@@ -76,11 +76,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Debug SSH key
+      - name: Verify SSH key
         run: |
-          echo "SSH_KEY: ${{ secrets.SSH_KEY }}"
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+          ssh-add -L
+          ssh -T git@github.com
 
       - name: Deploy to server
         run: |
