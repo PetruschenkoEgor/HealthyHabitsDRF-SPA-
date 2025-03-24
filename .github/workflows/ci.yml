@@ -76,8 +76,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Temp Key Debug
-        run: echo "KEY_START:${SSH_KEY}KEY_END"
+      - name: Debug SSH key
+        run: |
+          echo "SSH_KEY: ${{ secrets.SSH_KEY }}"
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
 
