@@ -9,13 +9,14 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
 # Копируем остальные файлы проекта в контейнер
 COPY . .
+
+COPY .env .env
+
+# COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /app/staticfiles && chmod -R 755 /app/staticfiles
 
