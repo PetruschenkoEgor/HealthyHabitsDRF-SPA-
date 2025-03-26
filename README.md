@@ -37,7 +37,7 @@ pip install -r requirements.txt
 Создайте файл .env в корне проекта и добавьте необходимые переменные окружения, они указаны в .env.example
 4. Подключитесь к серверу:
 ssh user@your_server_ip
-5. Далее необходимо в Git Hab секретах указать DOCKER_HUB_ACCESS_TOKEN, DOCKER_HUB_USERNAME, SECRET_KEY, SERVER_IP, SSH_KEY, SSH_USER
+5. Далее необходимо в Git Hab секретах указать DOCKER_HUB_ACCESS_TOKEN, DOCKER_HUB_USERNAME, SECRET_KEY, SERVER_IP, SSH_KEY, SSH_USER, ENV_FILE(в этот секрет необходимо добавить переменные из .env файла)
 6. После этого необходимо внести изменения в код проекта, сделать коммит и запушить в удаленный репозиторий на Git Hub, изменения автоматически пройдут тесты, соберутся образы и произойдет деплой
 
 ## Документация:
