@@ -54,12 +54,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Create .env file
-        run: |
-          cd app
-          touch .env
-          echo '"%{{ secrets.ENV_FILE }}"' | sed "s/\"//g" > .env
-
       - name: Log in in Docker hub
         run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
@@ -89,6 +83,8 @@ jobs:
             docker stop myapp || true
             docker rm myapp || true
             cd app
+            touch .env
+            echo '"%{{ secrets.ENV_FILE }}"' | sed "s/\"//g" > .env
             docker-compose up -d
           EOF
 
