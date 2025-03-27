@@ -10,12 +10,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Копируем остальные файлы проекта в контейнер
-COPY . .
+COPY . /app/
 
-# COPY requirements.txt .
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Создаем директорию для медиафайлов
+RUN mkdir -p /app/media && chmod -R 755 /app/media
 RUN mkdir -p /app/staticfiles && chmod -R 755 /app/staticfiles
 
 # Открываем порт 8000 для взаимодействия с приложением
