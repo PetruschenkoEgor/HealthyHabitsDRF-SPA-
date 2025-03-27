@@ -84,7 +84,7 @@ jobs:
             docker rm myapp || true
             cd app
             touch .env
-            echo '"%{{ secrets.ENV_FILE }}"' | sed "s/\"//g" > .env
+            echo '"${{ secrets.ENV_FILE }}"' | sed "s/\"//g" > .env
             docker-compose up -d
           EOF
 
