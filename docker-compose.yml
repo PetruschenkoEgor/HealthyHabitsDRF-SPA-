@@ -39,7 +39,7 @@ services:
       - '6379:6379'
 
   celery:
-    build: .
+    image: egorsdf/myapp
     command: celery -A config worker --loglevel=info
     volumes:
       - .:/app
@@ -50,7 +50,7 @@ services:
       - ./.env
 
   celery-beat:
-    build: .
+    image: egorsdf/myapp
     command: celery -A config beat --loglevel=info
     volumes:
       - .:/app
@@ -61,7 +61,7 @@ services:
       - ./.env
 
   test:
-    build: .
+    image: egorsdf/myapp
     command: python manage.py test
     volumes:
       - .:/app
