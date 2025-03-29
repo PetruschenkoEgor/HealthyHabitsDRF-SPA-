@@ -31,7 +31,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./.env
+      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg-isready -h db -U $POSTGRES_USER" ]
       interval: 10s
@@ -55,7 +55,7 @@ services:
       - redis
       - web
     env_file:
-      - ./.env
+      - .env
 
   celery-beat:
     build: .
@@ -67,7 +67,7 @@ services:
       - redis
       - web
     env_file:
-      - ./.env
+      - .env
 
 volumes:
   postgres_data:
