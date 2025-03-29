@@ -85,6 +85,7 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -tt -o StrictHostKeyChecking=yes ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}  << 'EOF'
+          docker-compose down -v
           echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
           cd app
           echo '"${{ secrets.ENV_FILE }}"' | sed "s/\"//g" > .env
