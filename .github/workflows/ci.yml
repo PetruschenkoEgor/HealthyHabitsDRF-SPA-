@@ -63,6 +63,12 @@ jobs:
       - name: Push Docker image in Docker hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
 
+      - name: Build Docker image nginx
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:${{ github.sha }} nginx
+
+      - name: Push Docker image nginx in Docker hub
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:${{ github.sha }}
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

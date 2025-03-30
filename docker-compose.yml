@@ -18,9 +18,9 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx
       - ./html:/usr/share/nginx/html
     env_file:
       - .env
