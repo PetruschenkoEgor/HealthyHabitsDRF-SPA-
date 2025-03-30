@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   web:
-    image: egorsdf/myapp:b06d865f669263e7054fbee99461c7d261362ed0
+    image: egorsdf/myapp:${TAG}
     command: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/code
@@ -12,16 +12,22 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - my_network
     env_file:
       - .env
 
   nginx:
-    build: ./nginx
+    image: egorsdf/nginx:${TAG}
     ports:
-      - "81:80"
+      - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./html:/usr/share/nginx/html
+    networks:
+      - my_network
+    dns:
+      - 127.0.0.11
     env_file:
       - .env
 
@@ -29,6 +35,8 @@ services:
     image: postgres:16
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - my_network
     env_file:
       - .env
     healthcheck:
@@ -41,9 +49,11 @@ services:
     image: redis:latest
     volumes:
       - redis_data:/data
+    networks:
+      - my_network
 
   celery:
-    image: egorsdf/myapp:b06d865f669263e7054fbee99461c7d261362ed0
+    image: egorsdf/myapp:${TAG}
     command: celery -A config worker -l INFO -P eventlet
     volumes:
       - .:/code
@@ -51,11 +61,13 @@ services:
       - db
       - redis
       - web
+    networks:
+      - my_network
     env_file:
       - .env
 
   celery-beat:
-    image: egorsdf/myapp:b06d865f669263e7054fbee99461c7d261362ed0
+    image: egorsdf/myapp:${TAG}
     command: celery -A config beat -l INFO
     volumes:
       - .:/code
@@ -63,8 +75,14 @@ services:
       - db
       - redis
       - web
+    networks:
+      - my_network
     env_file:
       - .env
+
+networks:
+  my_network:
+    driver: bridge
 
 volumes:
   postgres_data:
