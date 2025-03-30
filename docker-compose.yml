@@ -7,11 +7,21 @@ services:
     volumes:
       - .:/code
       - static_volume:/code/staticfiles
-    ports:
-      - "8080:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
       - redis
+    env_file:
+      - .env
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./html:/usr/share/nginx/html
     env_file:
       - .env
 
@@ -31,8 +41,6 @@ services:
     image: redis:latest
     volumes:
       - redis_data:/data
-    ports:
-      - '6379:6379'
 
   celery:
     image: egorsdf/myapp:b06d865f669263e7054fbee99461c7d261362ed0
@@ -61,3 +69,4 @@ services:
 volumes:
   postgres_data:
   static_volume:
+  redis_data:
