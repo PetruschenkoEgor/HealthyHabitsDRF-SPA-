@@ -4,6 +4,7 @@ from healthy_habits.apps import HealthyHabitsConfig
 from healthy_habits.views import (HabitCreateAPIView, HabitDestroyAPIView, HabitListAPIView, HabitPublicAPIView,
                                   HabitRetrieveAPIView, HabitUpdateAPIView)
 
+
 app_name = HealthyHabitsConfig.name
 
 urlpatterns = [
